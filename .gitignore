@@ -1,0 +1,10 @@
+# Compiled binaries
+*.exe
+*.o
+*.out
+dinetrack
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
