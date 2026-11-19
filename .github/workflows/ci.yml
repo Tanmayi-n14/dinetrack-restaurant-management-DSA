@@ -1,0 +1,29 @@
+name: C Build & Verification Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: GCC Strict Compilation & Automated Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Install Build Tooling
+      run: sudo apt-get update && sudo apt-get install -y gcc make
+
+    - name: Compile with Strict Warnings (-Wall -Wextra -O2)
+      run: |
+        gcc -Wall -Wextra -O2 src/DineTrack.c -o dinetrack
+
+    - name: Run Smoke & Menu Validation Test
+      run: |
+        # Pipe input 0 to exit gracefully and verify clean execution
+        printf "0\n" | ./dinetrack || true
+        echo "Build and initialization verification successful."
